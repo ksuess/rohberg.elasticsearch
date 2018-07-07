@@ -28,7 +28,12 @@ PUT /german_example
 }
 
 
-GET /german_example/_analyze?analyzer=my_german
+GET /german_example/_analyze
+POST /german_example/_analyze
+{
+  "analyzer": "my_german",
+  "text": "morgens Übelkeit"
+}
 
 
 Update an index by adding a field to a type
@@ -53,6 +58,20 @@ PUT /german_example/_mapping/diarypage
 Create a document (auto-generated ID)
 
 POST /german_example/diarypage
+
+{
+  "title": "Morgenstund hat Gold im Mund",
+  "tag": [
+    "Spruch"
+  ]
+}
+{
+  "title": "Stündlich ruft das Murmeltier",
+  "tag": [
+    "Nonsens"
+  ]
+}
+
 {
   "title": "Elastic is funny",
   "tag": [
