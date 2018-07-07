@@ -1,0 +1,61 @@
+PUT /german_example
+{
+  "settings": {
+    "analysis": {
+      "filter": {
+        "german_stop": {
+          "type":       "stop",
+          "stopwords":  "_german_"
+        },
+        "german_stemmer": {
+          "type":       "stemmer",
+          "language":   "german"
+        }
+      },
+      "analyzer": {
+        "my_german": {
+          "char_filter":  ["html_strip"],
+          "tokenizer":  "standard",
+          "filter": [
+            "lowercase",
+            "german_stop",
+            "german_stemmer"
+          ]
+        }
+      }
+    }
+  }
+}
+
+
+GET /german_example/_analyze?analyzer=my_german
+
+
+Update an index by adding a field to a type
+
+PUT /german_example/_mapping/diarypage
+{
+  "diarypage": {
+    "properties": {
+      "title": {
+        "type": "string",
+        "analyzer": "my_german"
+      },
+      "tag": {
+        "type": "string",
+        "analyzer": "my_german"
+      }
+    }
+  }
+}
+
+
+Create a document (auto-generated ID)
+
+POST /german_example/diarypage
+{
+  "title": "Elastic is funny",
+  "tag": [
+    "lucene"
+  ]
+}
